@@ -1,2 +1,2 @@
 # chess
-xaadrez pico-8
+xadrez pico-8

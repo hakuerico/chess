@@ -28,8 +28,8 @@ function _update60()
 	
 	mouse:update()
 	
-	for pca in all(pecas) do
-		pca:update()
+	for peca in all(pecas) do
+		peca:update()
 	end
 	
 	for casa in all(grid) do
@@ -62,6 +62,10 @@ log = function(a)
 	if a == 1 then
 		print(mouse.x+1, 8)
 		print(mouse.y+2, 8)
+		
+		for casa in all(grid) do
+			print(casa.ocupada, casa.x, casa.y, 8)
+		end
 		
 		
 		
@@ -310,13 +314,13 @@ end,
 				for casa in all(grid) do
 					if casa.x == self.x
 					and casa.y == self.y
-					and casa.ocupada == true
+					and casa.ocupada != 0
 					then
 					
 						-- comer pecas
 						for peca in all(pecas) do
 							
-							--acha peca na esma casa
+							--acha peca na mesma casa
 							if peca.x == casa.x
 							and peca.y == casa.y
 							then
@@ -428,8 +432,7 @@ end,
 casa ={
 	x = 0,
 	y = 0,
-	ocupada = false,
-	valid = false,
+	ocupada = 0,
 	
 	--new
 	new = function(self,tbl)
@@ -466,20 +469,24 @@ casa ={
 	
 	--update
 	update = function(self)
-		local ocupada = 0
+	self.ocupada = 0
+	
+		
 		--checa ocupada
 		for peca in all(pecas) do
+			
 			if peca.x == self.x
 			and peca.y == self.y
 			then
-				ocupada += 1
+			
+				if peca.cor == 1  then
+					self.ocupada = peca.cor
+				elseif peca.cor == -1 then
+					self.ocupada = peca.cor
+				end
+				
 			end
 		end		
-		if ocupada >= 1 then
-			self.ocupada = true
-		else
-			self.ocupada = false
-			end
 	end,
 	
 
